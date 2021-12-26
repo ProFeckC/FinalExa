@@ -1,0 +1,17 @@
+h1 {
+  text-align: center;
+  color: orange;
+  font-size: 35px;
+}
+
+.login {
+  width: 600px;
+  margin: 30px auto 0;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.login .radio {
+  width: 50%;
+  margin: 20px auto;
+}
