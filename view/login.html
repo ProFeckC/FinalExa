@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,28 +77,28 @@
 
 				<div class="list-group">
 					<a href="index.html" class="list-group-item list-group-item-action">首页</a>
-					<a href="register.html" class="list-group-item list-group-item-action">管理活动</a>
-					<a href="AllAc2" class="list-group-item list-group-item-action">活动列表</a>
-					<a href="CheckOut" class="list-group-item list-group-item-action">管理员登出</a>
-					
+					<a href="login.html" class="list-group-item list-group-item-action">用户登录</a>
+                    <a href="reg.html" class="list-group-item list-group-item-action">注册</a>
+                    <a href="mglogin.html" class="list-group-item list-group-item-action">管理员用户登录</a>
+					<a href="AllAc" class="list-group-item list-group-item-action">活动列表</a>
+					<a href="AllSigh" class="list-group-item list-group-item-action">已报名活动</a>
+					<a href="CheckOut" class="list-group-item list-group-item-action " >登出</a>
 				</div>
 
 
 			</div>
-
-
 			<div class="col-lg-6">
 
 
 				<div class="card">
-					<div class="card-header">管理员登录</div>
+					<div class="card-header">用户登录</div>
 					<div class="card-body">
 
 						<p style="color: red">${info}</p>
 
-						<form method="post" action="MgLoginAction">
+						<form method="post" action="LoginAction">
 							<div class="form-group row">
-								<label for="inputEmail3" class="col-sm-3 col-form-label">管理用户名</label>
+								<label for="inputEmail3" class="col-sm-3 col-form-label">用户名</label>
 								<div class="col-sm-9">
 									<input type="text" name="username" class="form-control"
 										id="inputEmail3" placeholder="用户名">
@@ -112,6 +111,8 @@
 										id="inputPassword3" placeholder="密码">
 								</div>
 							</div>
+
+
 
 							<div class="form-group row">
 								<div class="col-sm-10">
@@ -127,7 +128,6 @@
 
 
 			</div>
-
 		</div>
 
 	</div>
