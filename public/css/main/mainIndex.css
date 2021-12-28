@@ -11,6 +11,9 @@
 .container-wrapper {
     background: #444 url("../../images/main/index.jpeg");
     background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 header {
