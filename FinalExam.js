@@ -1,28 +1,63 @@
-const express = require("express")
-const mongoose = require('mongoose');
-const ejs = require('ejs');
-mongoose.connect('mongodb://172.21.2.236/190110910820');
-const app = express()
-const schema={
-    name:String,
-    data2:String,
-    data3:String
+var express = require('express');
+var swig = require('swig');
+var path = require('path');
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var Cookies = require('cookies');
+var User = require('./models/User');
+var app = express();
+app.use('/public', express.static(__dirname + '/public'));
 
-}
-const Data = mongoose.model('data1',schema);
-app.use('/',express.static('public'))
-app.get("/input",(req,res)=>{
-    //res.send(req.query)
-    console.log(req.query)
-    const kitty = new Data({name:req.query.first,data2:req.query.submit1});
-    kitty.save().then(()=>console.log('write ok'))
-    
-    //ejs.renderFile(filename,data,options,function(err,str){
-        //str=>输出选然后的html字符串
-    //});
-    ejs.renderFile('result.html',{returnVal:'success'},(err,str)=>{
-        res.send(str)
-    });
-})
+app.engine('html', swig.renderFile);
 
-app.listen(10820)
+app.set('views', './views');
+
+
+app.set('view engine', 'html');
+
+
+swig.setDefaults({cache: false});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(function (req, res, next) {
+    req.cookies = new Cookies(req, res);
+
+    req.userInfo = {};
+    if (req.cookies.get('userInfo')) {
+        try {
+            req.userInfo = JSON.parse(req.cookies.get('userInfo'));
+
+            User.findById(req.userInfo._id).then(function (userInfo) {
+                req.userInfo.isAdmin = Boolean(userInfo.isAdmin);
+                req.userInfo.isSuperAdmin = Boolean(userInfo.isSuperAdmin);
+                next();
+            });
+        }
+        catch (e) {
+            console.log('Cookies have some Error');
+            next();
+        }
+    }
+    else {
+        next();
+    }
+});
+app.use('/', require('./routers/main'));
+app.use('/admin', require('./routers/admin'));
+app.use('/user', require('./routers/users'));
+app.use('/api', require('./routers/api'));
+
+
+mongoose.Promise=global.Promise;
+mongoose.connect('mongodb://localhost:27017/190110910820', function (err) {
+    if (err) {
+        console.log('数据库连接失败');
+        return;
+    }
+    else {
+        app.listen(3000);
+        console.log('Success');
+    }
+});
