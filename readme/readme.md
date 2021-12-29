@@ -101,3 +101,67 @@ e)mongoose
 
 ![image-20211228022609722](image-20211228022609722.png)
 
+### 3.数据库设计
+
+#### 3.1 Users 用户密码表
+
+```javascript
+var mongoose = require('mongoose');
+var schema = new mongoose.Schema({
+    username: String,
+    password: String,
+    isSuperAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    }
+});
+
+module.exports = schema;
+```
+
+### 3.2 category 活动分类表
+
+```javascript
+var mongoose = require('mongoose');
+var schema = new mongoose.Schema({
+    name:String
+});
+
+module.exports = schema;
+```
+
+### 3.3 content 活动内容表
+
+```javascript
+var mongoose = require('mongoose');
+
+var schema = new mongoose.Schema({
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    title: String,
+    description: {type: String, default: ''},
+    content: {type: String, default: ''},
+    addTime: {type: Date, default: new Date()},
+
+    views: {type: Number, default: 0},
+
+    comments: {
+        type: Array,
+        default: []
+    }
+
+});
+
+module.exports = schema;
+```
+
