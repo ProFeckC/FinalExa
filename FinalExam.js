@@ -51,13 +51,13 @@ app.use('/api', require('./routers/api'));
 
 
 mongoose.Promise=global.Promise;
-mongoose.connect('mongodb://localhost:27017/190110910820', function (err) {
+mongoose.connect('mongodb://172.21.2.236:27017/190110910820', function (err) {
     if (err) {
         console.log('数据库连接失败');
         return;
     }
     else {
-        app.listen(3000);
-        console.log('Success');
+        app.listen(10820);
+        console.log('Connection Succeed');
     }
 });
